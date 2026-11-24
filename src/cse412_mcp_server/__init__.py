@@ -206,3 +206,6 @@ def update_game(
 @mcp.tool
 def delete_game(game: str):
     return "Tool not Implemented!"
+
+if __name__ == "__main__":
+    mcp.run();
