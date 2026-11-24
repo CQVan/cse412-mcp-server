@@ -1,0 +1,19 @@
+{
+    "database_settings": {
+        "database_url" : "",
+        "steam_api_key" : "",
+        "target_user" : ""
+    },
+
+    "transport_protocol" : "http",
+    
+    "http_settings": {
+        "host" : "localhost",
+        "port" : 8000
+    },
+
+    "sse_settings": {
+        "host" : "localhost",
+        "port" : 8000
+    }
+}
