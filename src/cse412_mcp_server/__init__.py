@@ -1,6 +1,8 @@
-import json
+import os
+from pathlib import Path
 
 from fastmcp import FastMCP
+from dotenv import load_dotenv
 
 mcp = FastMCP("Steam Library Inspector")
 
@@ -156,23 +158,30 @@ def get_games_without_dlc(
     return "Tool not Implemented!"
 
 def run_mcp():
-    with open ("../config.json", "r", encoding="utf-8") as file:
-            config = json.load(file)
-    
-    match config["transport"]:
+    project_root = Path(__file__).resolve().parents[2]
+    load_dotenv(project_root / ".env")
+
+    match os.getenv("TRANSPORT_PROTOCOL", "http"):
         case "http":
-            host = config["http_settings"]["host"]
-            port = config["http_settings"]["port"]
-            mcp.run(transport="http", host=host, port=port);
-        case "http":
-            host = config["sse_settings"]["host"]
-            port = config["sse_settings"]["port"]
-            mcp.run(transport="sse", host=host, port=port);
+            host = os.getenv("HTTP_HOST", "localhost")
+            port = int(os.getenv("HTTP_PORT", "8000"))
+            mcp.run(transport="http", host=host, port=port)
+        case "sse":
+            host = os.getenv("SSE_HOST", "localhost")
+            port = int(os.getenv("SSE_PORT", "8000"))
+            mcp.run(transport="sse", host=host, port=port)
         case "stdio":
             mcp.run()
+        case protocol:
+            raise ValueError(
+                f"Unsupported transport protocol {protocol!r}. "
+                "Expected 'http', 'sse', or 'stdio'."
+            )
+
+
+def main():
+    run_mcp()
+
 
 if __name__ == "__main__":
-
-    
-    
-    run_mcp()
+    main()
