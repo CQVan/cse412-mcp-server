@@ -9,7 +9,9 @@ authors = [
 requires-python = ">=3.11"
 dependencies = [
     "fastmcp>=4.2.5",
+    "psycopg[binary]>=3.3.9",
     "python-dotenv>=1.2.4",
+    "requests>=2.31.0",
 ]
 
 [project.scripts]

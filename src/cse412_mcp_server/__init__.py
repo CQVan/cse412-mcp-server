@@ -4,6 +4,8 @@ from pathlib import Path
 from fastmcp import FastMCP
 from dotenv import load_dotenv
 
+from cse412_mcp_server.db import init_database
+
 mcp = FastMCP("Steam Library Inspector")
 
 
@@ -180,6 +182,9 @@ def run_mcp():
 
 
 def main():
+
+    init_database()
+
     run_mcp()
 
 
